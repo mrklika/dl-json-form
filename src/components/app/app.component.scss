@@ -1,0 +1,21 @@
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  margin-top: 24px;
+  padding: 24px;
+}
+
+.layout-card {
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.layout-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.pre {
+  font-size: 16px;
+}

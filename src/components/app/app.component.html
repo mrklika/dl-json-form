@@ -1,0 +1,130 @@
+<router-outlet>
+  <div class="wrap">
+
+  <p>DataLite - Petr Klika</p>
+
+    @if (formGroup) {
+      <form [formGroup]="formGroup">
+        @if (layoutItemListSignal()?.length) {
+          @for (layoutItem of layoutItemListSignal(); track $index) {
+            <mat-card class="layout-card">
+              @if (layoutItem.items[0].config) {
+                <div class="layout-card-grid">
+                  @for (layoutItemColumn of layoutItem.items[0].config.columns; track $index) {
+                    <div>
+                      @for (layoutItemColumnContent of layoutItemColumn.content; track $index) {
+                        <div>
+                          @switch (formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.type) {
+                            @case ('text') {
+                              <app-text-input
+                                [formControlName]="layoutItem.items[0].items[layoutItemColumnContent]"
+                                [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
+                                [config]="{
+                                  title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
+                                  validationMessages: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages
+                                }">
+                              </app-text-input>
+                            }
+                            @case ('select') {
+                              <app-select-input
+                                [formControlName]="layoutItem.items[0].items[layoutItemColumnContent]"
+                                [optionList]="formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.oneOf"
+                                [config]="{ title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title}">
+                              </app-select-input>
+                            }
+                            @case ('textarea') {
+                              <app-text-input
+                                [formControlName]="layoutItem.items[0].items[layoutItemColumnContent]"
+                                [isMultiline]="true"
+                                [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
+                                [config]="{
+                                  title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
+                                  validationMessages: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages
+                                }">
+                              </app-text-input>
+                            }
+                            @case ('date') {
+                              <app-date-input
+                                [formControlName]="layoutItem.items[0].items[layoutItemColumnContent]"
+                                [config]="{ title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title}">
+                              </app-date-input>
+                            }
+                            @default {
+                              <app-text-input
+                                [formControlName]="layoutItem.items[0].items[layoutItemColumnContent]"
+                                [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
+                                [config]="{
+                                  title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
+                                  validationMessages: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages
+                                }">
+                              </app-text-input>
+                            }
+                          }
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              } @else {
+                @for (item of layoutItem.items[0].items; track $index) {
+                  @if (formDataSignal()?.properties?.[item]) {
+                  <div>
+                    @switch (formDataSignal()?.properties?.[item]?.widget?.type) {
+                      @case ('text') {
+                        <app-text-input
+                          [formControlName]="item"
+                          [control]="formGroup.controls[item]"
+                          [config]="{
+                            title: formDataSignal()?.properties?.[item]?.title,
+                            validationMessages: formDataSignal()?.properties?.[item]?.widget?.validationMessages
+                          }">
+                        </app-text-input>
+                      }
+                      @case ('select') {
+                        <app-select-input
+                          [formControlName]="item"
+                          [optionList]="formDataSignal()?.properties?.[item]?.oneOf"
+                          [config]="{ title: formDataSignal()?.properties?.[item]?.title}">
+                        </app-select-input>
+                      }
+                      @case ('textarea') {
+                        <app-text-input
+                          [formControlName]="item"
+                          [isMultiline]="true"
+                          [control]="formGroup.controls[item]"
+                          [config]="{
+                            title: formDataSignal()?.properties?.[item]?.title,
+                            validationMessages: formDataSignal()?.properties?.[item]?.widget?.validationMessages
+                          }">
+                        </app-text-input>
+                      }
+                      @case ('date') {
+                        <app-date-input
+                          [formControlName]="item"
+                          [config]="{ title: formDataSignal()?.properties?.[item]?.title}">
+                        </app-date-input>
+                      }
+                      @default {
+                        <app-text-input
+                          [formControlName]="item"
+                          [control]="formGroup.controls[item]"
+                          [config]="{
+                            title: formDataSignal()?.properties?.[item]?.title,
+                            validationMessages: formDataSignal()?.properties?.[item]?.widget?.validationMessages
+                          }">
+                        </app-text-input>
+                      }
+                    }
+                  </div>
+                  }
+                }
+              }
+            </mat-card>
+          }
+        }
+      </form>
+
+      <pre class="pre">{{ formGroup.value | json }}</pre>
+    }
+  </div>
+<router-outlet />
