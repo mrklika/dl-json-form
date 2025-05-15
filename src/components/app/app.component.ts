@@ -4,14 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { TextInputComponent } from '../text-input';
-import { SelectInputComponent } from '../select-input';
-import { DateInputComponent } from '../date-input';
 import { FormSchema, Property } from '../../models';
+import { DynamicFieldComponent } from '../dynamic-input';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterOutlet, ReactiveFormsModule, TextInputComponent, SelectInputComponent, DateInputComponent, MatCardModule ],
+  imports: [CommonModule, RouterOutlet, ReactiveFormsModule, MatCardModule, DynamicFieldComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

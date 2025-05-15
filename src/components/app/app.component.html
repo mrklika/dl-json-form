@@ -16,48 +16,53 @@
                         <div>
                           @switch (formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.type) {
                             @case ('text') {
-                              <app-text-input
-                                [formControlName]="layoutItem.items[0].items[layoutItemColumnContent]"
+                              <app-dynamic-field
                                 [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
                                 [config]="{
                                   title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
-                                  validationMessages: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages
+                                  validationMessages: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages,
+                                  widgetType: 'text'
                                 }">
-                              </app-text-input>
+                              </app-dynamic-field>
                             }
                             @case ('select') {
-                              <app-select-input
-                                [formControlName]="layoutItem.items[0].items[layoutItemColumnContent]"
-                                [optionList]="formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.oneOf"
-                                [config]="{ title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title}">
-                              </app-select-input>
+                              <app-dynamic-field
+                                [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
+                                [config]="{
+                                  title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
+                                  optionList: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.oneOf,
+                                  widgetType: 'select'
+                                }">
+                              </app-dynamic-field>
                             }
                             @case ('textarea') {
-                              <app-text-input
-                                [formControlName]="layoutItem.items[0].items[layoutItemColumnContent]"
-                                [isMultiline]="true"
+                              <app-dynamic-field
                                 [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
                                 [config]="{
                                   title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
-                                  validationMessages: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages
+                                  validationMessages: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages,
+                                  widgetType: 'textarea'
                                 }">
-                              </app-text-input>
+                              </app-dynamic-field>
                             }
                             @case ('date') {
-                              <app-date-input
-                                [formControlName]="layoutItem.items[0].items[layoutItemColumnContent]"
-                                [config]="{ title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title}">
-                              </app-date-input>
-                            }
-                            @default {
-                              <app-text-input
-                                [formControlName]="layoutItem.items[0].items[layoutItemColumnContent]"
+                              <app-dynamic-field
                                 [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
                                 [config]="{
                                   title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
-                                  validationMessages: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages
+                                  widgetType: 'date'
                                 }">
-                              </app-text-input>
+                              </app-dynamic-field>
+                            }
+                            @default {
+                              <app-dynamic-field
+                                [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
+                                [config]="{
+                                  title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
+                                  validationMessages: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages,
+                                  widgetType: 'text'
+                                }">
+                              </app-dynamic-field>
                             }
                           }
                         </div>
@@ -71,48 +76,55 @@
                   <div>
                     @switch (formDataSignal()?.properties?.[item]?.widget?.type) {
                       @case ('text') {
-                        <app-text-input
-                          [formControlName]="item"
+                        <app-dynamic-field
                           [control]="formGroup.controls[item]"
                           [config]="{
                             title: formDataSignal()?.properties?.[item]?.title,
-                            validationMessages: formDataSignal()?.properties?.[item]?.widget?.validationMessages
+                            validationMessages: formDataSignal()?.properties?.[item]?.widget?.validationMessages,
+                            widgetType: 'text'
                           }">
-                        </app-text-input>
+                        </app-dynamic-field>
                       }
                       @case ('select') {
-                        <app-select-input
-                          [formControlName]="item"
-                          [optionList]="formDataSignal()?.properties?.[item]?.oneOf"
-                          [config]="{ title: formDataSignal()?.properties?.[item]?.title}">
-                        </app-select-input>
+                        <app-dynamic-field
+                          [control]="formGroup.controls[item]"
+                          [config]="{
+                            title: formDataSignal()?.properties?.[item]?.title,
+                            validationMessages: formDataSignal()?.properties?.[item]?.widget?.validationMessages,
+                            optionList: formDataSignal()?.properties?.[item]?.oneOf,
+                            widgetType: 'select'
+                          }">
+                        </app-dynamic-field>
                       }
                       @case ('textarea') {
-                        <app-text-input
-                          [formControlName]="item"
-                          [isMultiline]="true"
+                        <app-dynamic-field
                           [control]="formGroup.controls[item]"
                           [config]="{
                             title: formDataSignal()?.properties?.[item]?.title,
-                            validationMessages: formDataSignal()?.properties?.[item]?.widget?.validationMessages
+                            validationMessages: formDataSignal()?.properties?.[item]?.widget?.validationMessages,
+                            widgetType: 'textarea'
                           }">
-                        </app-text-input>
+                        </app-dynamic-field>
                       }
                       @case ('date') {
-                        <app-date-input
-                          [formControlName]="item"
-                          [config]="{ title: formDataSignal()?.properties?.[item]?.title}">
-                        </app-date-input>
-                      }
-                      @default {
-                        <app-text-input
-                          [formControlName]="item"
+                        <app-dynamic-field
                           [control]="formGroup.controls[item]"
                           [config]="{
                             title: formDataSignal()?.properties?.[item]?.title,
-                            validationMessages: formDataSignal()?.properties?.[item]?.widget?.validationMessages
+                            widgetType: 'date'
                           }">
-                        </app-text-input>
+                        </app-dynamic-field>
+
+                      }
+                      @default {
+                        <app-dynamic-field
+                          [control]="formGroup.controls[item]"
+                          [config]="{
+                            title: formDataSignal()?.properties?.[item]?.title,
+                            validationMessages: formDataSignal()?.properties?.[item]?.widget?.validationMessages,
+                            widgetType: 'text'
+                          }">
+                        </app-dynamic-field>
                       }
                     }
                   </div>

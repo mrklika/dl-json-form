@@ -1,0 +1,74 @@
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewContainerRef,
+  Injector,
+  inject,
+  ComponentRef
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
+import { Config } from '../../models';
+
+@Component({
+  selector: 'app-dynamic-field',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  template: '',
+})
+export class DynamicFieldComponent implements OnInit {
+  @Input() control!: AbstractControl;
+  @Input() config!: Config;
+
+  private view = inject(ViewContainerRef);
+  private injector = inject(Injector);
+
+  async ngOnInit() {
+    const widgetType = this.config?.widgetType ?? 'text';
+    const component = await this.loadComponent(widgetType);
+
+    const cmpRef: ComponentRef<any> = this.view.createComponent(component, {
+      injector: this.injector,
+    });
+
+    cmpRef.setInput('control', this.control);
+
+    if ('config' in cmpRef.instance) {
+      cmpRef.setInput('config', {
+        title: this.config?.title,
+        validationMessages: this.config?.validationMessages,
+      });
+    }
+
+    if ('optionList' in cmpRef.instance && this.config?.optionList) {
+      cmpRef.setInput('optionList', this.config.optionList);
+    }
+
+    if ('isMultiline' in cmpRef.instance && widgetType === 'textarea') {
+      cmpRef.setInput('isMultiline', true);
+    }
+  }
+
+  private async loadComponent(type: string): Promise<any> {
+    switch (type) {
+      case 'text':
+      case 'textarea': {
+        const mod = await import('../text-input/text-input.component');
+        return mod.TextInputComponent;
+      }
+      case 'select': {
+        const mod = await import('../select-input/select-input.component');
+        return mod.SelectInputComponent;
+      }
+      case 'date': {
+        const mod = await import('../date-input/date-input.component');
+        return mod.DateInputComponent;
+      }
+      default: {
+        const mod = await import('../text-input/text-input.component');
+        return mod.TextInputComponent;
+      }
+    }
+  }
+}

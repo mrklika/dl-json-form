@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, forwardRef } from '@angular/core';
 import {
+  AbstractControl,
   ControlValueAccessor,
+  FormControl,
   FormsModule,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule
@@ -14,20 +16,23 @@ import { Config, Option } from '../../models';
   selector: 'app-select-input',
   standalone: true,
   template: `
-    <mat-form-field appearance="fill" style="width: 100%;">
-      <mat-label>{{ config?.title }}</mat-label>
-      <mat-select
-        [value]="value"
-        (selectionChange)="onSelect($event.value)"
-        (blur)="onTouched()"
-      >
-      @for (option of optionList; track $index) {
-        <mat-option [value]="option.const">
-          {{ option.title }}
-        </mat-option>
-      }
-      </mat-select>
-    </mat-form-field>
+    @if (formControl) {
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>{{ config?.title }}</mat-label>
+        <mat-select
+          [value]="value"
+          [formControl]="formControl"
+          (selectionChange)="onSelect($event.value)"
+          (blur)="onTouched()"
+        >
+        @for (option of optionList; track $index) {
+          <mat-option [value]="option.const">
+            {{ option.title }}
+          </mat-option>
+        }
+        </mat-select>
+      </mat-form-field>
+    }
   `,
   imports: [
     CommonModule,
@@ -49,6 +54,11 @@ export class SelectInputComponent implements ControlValueAccessor {
 
   @Input() config?: Config;
   @Input() optionList?: Option[] = [];
+  @Input() control?: AbstractControl;
+
+  get formControl(): FormControl | null {
+    return this.control instanceof FormControl ? this.control : null;
+  }
 
   value: string = '';
 

@@ -58,6 +58,8 @@ export interface Property {
 export interface Config {
   title?: string;
   validationMessages?: { [key: string]: string; };
+  optionList?: Option[];
+  widgetType?: 'text' | 'select' | 'date' | 'textarea';
 }
 
 export interface FieldWidget {

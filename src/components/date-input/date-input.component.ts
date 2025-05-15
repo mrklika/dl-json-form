@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, forwardRef } from '@angular/core';
 import {
+  AbstractControl,
   ControlValueAccessor,
+  FormControl,
   FormsModule,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule
@@ -16,19 +18,22 @@ import { Config } from '../../models';
   selector: 'app-date-input',
   standalone: true,
   template: `
-    <mat-form-field appearance="fill" style="width: 100%;">
-      <mat-label>{{ config?.title }}</mat-label>
-      <input
-        matInput
-        [matDatepicker]="picker"
-        [value]="value"
-        (focus)="picker.open()"
-        (dateChange)="onDateChange($event.value)"
-        (blur)="onTouched()"
-      />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+    @if (formControl) {
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>{{ config?.title }}</mat-label>
+        <input
+          matInput
+          [formControl]="formControl"
+          [matDatepicker]="picker"
+          [value]="value"
+          (focus)="picker.open()"
+          (dateChange)="onDateChange($event.value)"
+          (blur)="onTouched()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    }
   `,
   imports: [
     CommonModule,
@@ -52,7 +57,12 @@ import { Config } from '../../models';
 export class DateInputComponent implements ControlValueAccessor {
 
   @Input() config?: Config;
+  @Input() control?: AbstractControl;
   value: string | null = null;
+
+  get formControl(): FormControl | null {
+    return this.control instanceof FormControl ? this.control : null;
+  }
 
   onChange = (val: string | null) => {};
   onTouched = () => {};
