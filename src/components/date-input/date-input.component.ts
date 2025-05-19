@@ -16,7 +16,6 @@ import { Config } from '../../models';
 
 @Component({
   selector: 'app-date-input',
-  standalone: true,
   template: `
     @if (formControl) {
       <mat-form-field appearance="fill" style="width: 100%;">

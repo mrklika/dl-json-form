@@ -5,8 +5,8 @@
 
     @if (formGroup) {
       <form [formGroup]="formGroup">
-        @if (layoutItemListSignal()?.length) {
-          @for (layoutItem of layoutItemListSignal(); track $index) {
+        @if (layoutItemListSignal$()?.length) {
+          @for (layoutItem of layoutItemListSignal$(); track $index) {
             <mat-card class="layout-card">
               @if (layoutItem.items[0].config) {
                 <div class="layout-card-grid">
@@ -14,13 +14,13 @@
                     <div>
                       @for (layoutItemColumnContent of layoutItemColumn.content; track $index) {
                         <div>
-                          @switch (formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.type) {
+                          @switch (formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.type) {
                             @case ('text') {
                               <app-dynamic-field
                                 [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
                                 [config]="{
-                                  title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
-                                  validationMessages: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages,
+                                  title: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
+                                  validationMessages: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages,
                                   widgetType: 'text'
                                 }">
                               </app-dynamic-field>
@@ -29,8 +29,8 @@
                               <app-dynamic-field
                                 [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
                                 [config]="{
-                                  title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
-                                  optionList: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.oneOf,
+                                  title: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
+                                  optionList: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.oneOf,
                                   widgetType: 'select'
                                 }">
                               </app-dynamic-field>
@@ -39,8 +39,8 @@
                               <app-dynamic-field
                                 [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
                                 [config]="{
-                                  title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
-                                  validationMessages: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages,
+                                  title: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
+                                  validationMessages: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages,
                                   widgetType: 'textarea'
                                 }">
                               </app-dynamic-field>
@@ -49,7 +49,7 @@
                               <app-dynamic-field
                                 [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
                                 [config]="{
-                                  title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
+                                  title: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
                                   widgetType: 'date'
                                 }">
                               </app-dynamic-field>
@@ -58,8 +58,8 @@
                               <app-dynamic-field
                                 [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
                                 [config]="{
-                                  title: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
-                                  validationMessages: formDataSignal()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages,
+                                  title: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
+                                  validationMessages: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages,
                                   widgetType: 'text'
                                 }">
                               </app-dynamic-field>
@@ -72,15 +72,15 @@
                 </div>
               } @else {
                 @for (item of layoutItem.items[0].items; track $index) {
-                  @if (formDataSignal()?.properties?.[item]) {
+                  @if (formDataSignal$()?.properties?.[item]) {
                   <div>
-                    @switch (formDataSignal()?.properties?.[item]?.widget?.type) {
+                    @switch (formDataSignal$()?.properties?.[item]?.widget?.type) {
                       @case ('text') {
                         <app-dynamic-field
                           [control]="formGroup.controls[item]"
                           [config]="{
-                            title: formDataSignal()?.properties?.[item]?.title,
-                            validationMessages: formDataSignal()?.properties?.[item]?.widget?.validationMessages,
+                            title: formDataSignal$()?.properties?.[item]?.title,
+                            validationMessages: formDataSignal$()?.properties?.[item]?.widget?.validationMessages,
                             widgetType: 'text'
                           }">
                         </app-dynamic-field>
@@ -89,9 +89,9 @@
                         <app-dynamic-field
                           [control]="formGroup.controls[item]"
                           [config]="{
-                            title: formDataSignal()?.properties?.[item]?.title,
-                            validationMessages: formDataSignal()?.properties?.[item]?.widget?.validationMessages,
-                            optionList: formDataSignal()?.properties?.[item]?.oneOf,
+                            title: formDataSignal$()?.properties?.[item]?.title,
+                            validationMessages: formDataSignal$()?.properties?.[item]?.widget?.validationMessages,
+                            optionList: formDataSignal$()?.properties?.[item]?.oneOf,
                             widgetType: 'select'
                           }">
                         </app-dynamic-field>
@@ -100,8 +100,8 @@
                         <app-dynamic-field
                           [control]="formGroup.controls[item]"
                           [config]="{
-                            title: formDataSignal()?.properties?.[item]?.title,
-                            validationMessages: formDataSignal()?.properties?.[item]?.widget?.validationMessages,
+                            title: formDataSignal$()?.properties?.[item]?.title,
+                            validationMessages: formDataSignal$()?.properties?.[item]?.widget?.validationMessages,
                             widgetType: 'textarea'
                           }">
                         </app-dynamic-field>
@@ -110,7 +110,7 @@
                         <app-dynamic-field
                           [control]="formGroup.controls[item]"
                           [config]="{
-                            title: formDataSignal()?.properties?.[item]?.title,
+                            title: formDataSignal$()?.properties?.[item]?.title,
                             widgetType: 'date'
                           }">
                         </app-dynamic-field>
@@ -120,8 +120,8 @@
                         <app-dynamic-field
                           [control]="formGroup.controls[item]"
                           [config]="{
-                            title: formDataSignal()?.properties?.[item]?.title,
-                            validationMessages: formDataSignal()?.properties?.[item]?.widget?.validationMessages,
+                            title: formDataSignal$()?.properties?.[item]?.title,
+                            validationMessages: formDataSignal$()?.properties?.[item]?.widget?.validationMessages,
                             widgetType: 'text'
                           }">
                         </app-dynamic-field>

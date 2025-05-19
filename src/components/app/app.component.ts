@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
@@ -15,7 +15,6 @@ import { DynamicFieldComponent } from '../dynamic-input';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-
   // #Data
 
   // Angular
@@ -26,25 +25,19 @@ export class AppComponent {
   }
 
   // Async
-  formDataSignal = signal<FormSchema | undefined>(undefined);
-  layoutItemListSignal = computed(() => this.formDataSignal()?.layout);
-  propertyListSignal = computed(() => {
-    const propertyList = this.formDataSignal()?.properties;
+  formDataSignal$ = signal<FormSchema | undefined>(undefined);
+  layoutItemListSignal$ = computed(() => this.formDataSignal$()?.layout);
+  propertyListSignal$ = computed(() => {
+    const propertyList = this.formDataSignal$()?.properties;
     if (!propertyList) { return undefined; }
     return Object.entries(propertyList);
   });
   formGroupSignal = computed(() => {
-    const formData = this.formDataSignal();
-    const propertyList = this.propertyListSignal();
+    const formData = this.formDataSignal$();
+    const propertyList = this.propertyListSignal$();
     if (!propertyList) { return undefined; }
     return this._buildFormGroup(propertyList, formData?.required);
   });
-
-  textFormControl = new FormControl();
-  selectFormControl = new FormControl();
-  dateFormControl = new FormControl();
-  selectOptionList = [ { title: 'xxx', value: 'xxx' } ];
-
 
   constructor(private _http: HttpClient) {
     this._loadFormData();
@@ -52,7 +45,7 @@ export class AppComponent {
 
   private _loadFormData() {
     this._http.get<FormSchema>('assets/form-data.json').subscribe({
-      next: (res) => this.formDataSignal.set(res),
+      next: (res) => this.formDataSignal$.set(res),
       error: (err) => console.error('Error:', err)
     });
   }
@@ -71,7 +64,7 @@ export class AppComponent {
         validators.push(Validators.required);
       }
 
-      group[key] = new FormControl('', validators);
+      group[key] = new FormControl('', { updateOn: 'blur', validators });
     }
 
     return new FormGroup(group);

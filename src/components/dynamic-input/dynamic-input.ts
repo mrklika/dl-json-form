@@ -13,7 +13,6 @@ import { Config } from '../../models';
 
 @Component({
   selector: 'app-dynamic-field',
-  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: '',
 })

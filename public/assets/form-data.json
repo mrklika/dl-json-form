@@ -200,7 +200,6 @@
     }
   },
   "required": [
-    "firstName",
     "lastName",
     "email",
     "phone"

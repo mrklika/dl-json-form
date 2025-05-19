@@ -14,7 +14,6 @@ import { Config, Option } from '../../models';
 
 @Component({
   selector: 'app-select-input',
-  standalone: true,
   template: `
     @if (formControl) {
       <mat-form-field appearance="fill" style="width: 100%;">
