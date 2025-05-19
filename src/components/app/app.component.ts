@@ -50,10 +50,10 @@ export class AppComponent {
     this.getFormConfigurationAndLoadFormData(0);
   }
 
-getFormConfigurationAndLoadFormData(formConfPathIndex?: number) {
-  let newIndex = (this.currentFormConfPathIndex + 1) % this.formConfPathList.length;
-  this._loadFormData(formConfPathIndex ?? newIndex);
-}
+  getFormConfigurationAndLoadFormData(formConfPathIndex?: number) {
+    let newIndex = (this.currentFormConfPathIndex + 1) % this.formConfPathList.length;
+    this._loadFormData(formConfPathIndex ?? newIndex);
+  }
 
   private _loadFormData(currentFormConfPathIndex: number) {
     this._http.get<FormSchema>(this.formConfPathList[currentFormConfPathIndex]).subscribe({
