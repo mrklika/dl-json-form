@@ -1,0 +1,104 @@
+{
+  "type": "object",
+  "layout": [
+    {
+      "type": "layout",
+      "items": [
+        {
+          "type": "layout",
+          "items": [
+            "firstName",
+            "lastName",
+            "email",
+            "phone"
+          ],
+          "config": {
+            "columns": [
+              {
+                "width": 6,
+                "content": [
+                  1,
+                  3
+                ]
+              },
+              {
+                "width": 6,
+                "content": [
+                  0,
+                  2
+                ]
+              }
+            ],
+            "innerPageLayout": false
+          },
+          "widget": {
+            "type": "dtl-fluent-columns"
+          }
+        }
+      ],
+      "widget": {
+        "type": "dtl-fluent-card"
+      }
+    }
+  ],
+  "widget": {
+    "type": "dtl-fluent-section"
+  },
+  "properties": {
+    "email": {
+      "type": "string",
+      "title": "E-mailová adresa",
+      "widget": {
+        "type": "text",
+        "validationMessages": {
+          "pattern": "Toto ale není správna emailová adresa!"
+        }
+      },
+      "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+      "config": {}
+    },
+    "phone": {
+      "type": "string",
+      "title": "Telefonní číslo",
+      "widget": {
+        "type": "text",
+        "validationMessages": {}
+      },
+      "pattern": "^\\+?[0-9]{1,3}?[0-9]{6,14}$",
+      "config": {},
+      "localizationData": {
+        "en": {
+          "title": "",
+          "widget": {
+            "tooltip": "",
+            "placeholder": ""
+          }
+        }
+      }
+    },
+    "lastName": {
+      "type": "string",
+      "title": "Příjmení",
+      "widget": {
+        "type": "text",
+        "validationMessages": {}
+      },
+      "config": {}
+    },
+    "firstName": {
+      "type": "string",
+      "title": "Jméno",
+      "widget": {
+        "type": "text",
+        "validationMessages": {}
+      },
+      "config": {}
+    }
+  },
+  "required": [
+    "firstName",
+    "lastName",
+    "email",
+    "phone"
+  ]
+}

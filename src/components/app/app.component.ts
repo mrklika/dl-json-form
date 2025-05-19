@@ -6,10 +6,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } 
 import { CommonModule } from '@angular/common';
 import { FormSchema, Property } from '../../models';
 import { DynamicFieldComponent } from '../dynamic-input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterOutlet, ReactiveFormsModule, MatCardModule, DynamicFieldComponent ],
+  imports: [CommonModule, RouterOutlet, ReactiveFormsModule, MatCardModule, MatButtonModule, DynamicFieldComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -20,6 +21,12 @@ export class AppComponent {
   // Angular
 
   // Sync
+  formConfPathList = [
+    'assets/form-data.json',
+    'assets/form-data2.json',
+    'assets/form-data3.json',
+  ];
+  currentFormConfPathIndex = 0;
   get formGroup(): FormGroup | undefined {
     return this.formGroupSignal$();
   }
@@ -40,12 +47,20 @@ export class AppComponent {
   });
 
   constructor(private _http: HttpClient) {
-    this._loadFormData();
+    this.getFormConfigurationAndLoadFormData(0);
   }
 
-  private _loadFormData() {
-    this._http.get<FormSchema>('assets/form-data.json').subscribe({
-      next: (res) => this.formDataSignal$.set(res),
+getFormConfigurationAndLoadFormData(formConfPathIndex?: number) {
+  let newIndex = (this.currentFormConfPathIndex + 1) % this.formConfPathList.length;
+  this._loadFormData(formConfPathIndex ?? newIndex);
+}
+
+  private _loadFormData(currentFormConfPathIndex: number) {
+    this._http.get<FormSchema>(this.formConfPathList[currentFormConfPathIndex]).subscribe({
+      next: (res) => {
+        this.currentFormConfPathIndex = currentFormConfPathIndex;
+        this.formDataSignal$.set(res);
+      },
       error: (err) => console.error('Error:', err)
     });
   }
