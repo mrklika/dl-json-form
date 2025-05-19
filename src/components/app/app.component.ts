@@ -21,7 +21,7 @@ export class AppComponent {
 
   // Sync
   get formGroup(): FormGroup | undefined {
-    return this.formGroupSignal();
+    return this.formGroupSignal$();
   }
 
   // Async
@@ -32,7 +32,7 @@ export class AppComponent {
     if (!propertyList) { return undefined; }
     return Object.entries(propertyList);
   });
-  formGroupSignal = computed(() => {
+  formGroupSignal$ = computed(() => {
     const formData = this.formDataSignal$();
     const propertyList = this.propertyListSignal$();
     if (!propertyList) { return undefined; }
