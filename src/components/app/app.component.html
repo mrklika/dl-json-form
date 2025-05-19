@@ -4,7 +4,7 @@
   <p>DataLite - Petr Klika</p>
 
     <button class="configuration-button" mat-stroked-button (click)="getFormConfigurationAndLoadFormData()">Získat další konfiguraci formuláře</button>
-    <pre class="configuration-path">konfigurace: {{ formConfPathList[currentFormConfPathIndex ?? 0] }}</pre>
+    <pre class="configuration-path">konfigurace: {{ formConfPathList[currentFormConfPathIndex] }}</pre>
 
     @if (formGroup) {
       <form [formGroup]="formGroup">
