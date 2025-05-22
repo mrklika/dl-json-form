@@ -55,20 +55,20 @@ export class DynamicFieldComponent implements OnInit {
     switch (type) {
       case 'text':
       case 'textarea': {
-        const mod = await import('../text-input/text-input.component');
-        return mod.TextInputComponent;
+        const comp = await import('../text-input/text-input.component');
+        return comp.TextInputComponent;
       }
       case 'select': {
-        const mod = await import('../select-input/select-input.component');
-        return mod.SelectInputComponent;
+        const comp = await import('../select-input/select-input.component');
+        return comp.SelectInputComponent;
       }
       case 'date': {
-        const mod = await import('../date-input/date-input.component');
-        return mod.DateInputComponent;
+        const comp = await import('../date-input/date-input.component');
+        return comp.DateInputComponent;
       }
       default: {
-        const mod = await import('../text-input/text-input.component');
-        return mod.TextInputComponent;
+        const comp = await import('../text-input/text-input.component');
+        return comp.TextInputComponent;
       }
     }
   }
