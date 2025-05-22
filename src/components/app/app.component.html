@@ -3,13 +3,19 @@
 
   <p>DataLite - Petr Klika</p>
 
-  <button class="configuration-button" mat-stroked-button (click)="getFormConfigurationAndLoadFormData()">Získat další konfiguraci formuláře</button>
+  <button
+    class="configuration-button"
+    mat-stroked-button
+    (click)="getFormConfigurationAndLoadFormData()">
+    Získat další konfiguraci formuláře
+  </button>
+
   <pre class="configuration-path">konfigurace: {{ formConfPathList[currentFormConfPathIndex] }}</pre>
 
     @if (formGroup) {
       <form [formGroup]="formGroup">
-        @if (layoutItemListSignal$()?.length) {
-          @for (layoutItem of layoutItemListSignal$(); track $index) {
+        @if (formDataSignal$()?.layout?.length) {
+          @for (layoutItem of formDataSignal$()?.layout; track $index) {
             <mat-card class="layout-card">
               @if (layoutItem.items[0].config) {
                 <div class="layout-card-grid">
@@ -17,52 +23,53 @@
                     <div>
                       @for (layoutItemColumnContent of layoutItemColumn.content; track $index) {
                         <div>
-                          @switch (formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.type) {
+                          @let item = layoutItem.items[0].items[layoutItemColumnContent];
+                          @switch (formDataSignal$()?.properties?.[item]?.widget?.type) {
                             @case ('text') {
                               <app-dynamic-field
-                                [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
+                                [control]="formGroup.controls[item]"
                                 [config]="{
-                                  title: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
-                                  validationMessages: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages,
+                                  title: formDataSignal$()?.properties?.[item]?.title,
+                                  validationMessages: formDataSignal$()?.properties?.[item]?.widget?.validationMessages,
                                   widgetType: 'text'
                                 }">
                               </app-dynamic-field>
                             }
                             @case ('select') {
                               <app-dynamic-field
-                                [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
+                                [control]="formGroup.controls[item]"
                                 [config]="{
-                                  title: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
-                                  optionList: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.oneOf,
+                                  title: formDataSignal$()?.properties?.[item]?.title,
+                                  optionList: formDataSignal$()?.properties?.[item]?.oneOf,
                                   widgetType: 'select'
                                 }">
                               </app-dynamic-field>
                             }
                             @case ('textarea') {
                               <app-dynamic-field
-                                [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
+                                [control]="formGroup.controls[item]"
                                 [config]="{
-                                  title: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
-                                  validationMessages: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages,
+                                  title: formDataSignal$()?.properties?.[item]?.title,
+                                  validationMessages: formDataSignal$()?.properties?.[item]?.widget?.validationMessages,
                                   widgetType: 'textarea'
                                 }">
                               </app-dynamic-field>
                             }
                             @case ('date') {
                               <app-dynamic-field
-                                [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
+                                [control]="formGroup.controls[item]"
                                 [config]="{
-                                  title: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
+                                  title: formDataSignal$()?.properties?.[item]?.title,
                                   widgetType: 'date'
                                 }">
                               </app-dynamic-field>
                             }
                             @default {
                               <app-dynamic-field
-                                [control]="formGroup.controls[layoutItem.items[0].items[layoutItemColumnContent]]"
+                                [control]="formGroup.controls[item]"
                                 [config]="{
-                                  title: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.title,
-                                  validationMessages: formDataSignal$()?.properties?.[layoutItem.items[0].items[layoutItemColumnContent]]?.widget?.validationMessages,
+                                  title: formDataSignal$()?.properties?.[item]?.title,
+                                  validationMessages: formDataSignal$()?.properties?.[item]?.widget?.validationMessages,
                                   widgetType: 'text'
                                 }">
                               </app-dynamic-field>

@@ -33,7 +33,6 @@ export class AppComponent {
 
   // Async
   formDataSignal$ = signal<FormSchema | undefined>(undefined);
-  layoutItemListSignal$ = computed(() => this.formDataSignal$()?.layout);
   propertyListSignal$ = computed(() => {
     const propertyList = this.formDataSignal$()?.properties;
     if (!propertyList) { return undefined; }
@@ -46,7 +45,7 @@ export class AppComponent {
     return this._buildFormGroup(propertyList, formData?.required);
   });
 
-  constructor(private _http: HttpClient) {
+  constructor(private readonly _http: HttpClient) {
     this.getFormConfigurationAndLoadFormData(0);
   }
 
@@ -66,7 +65,7 @@ export class AppComponent {
   }
 
   private _buildFormGroup(data: [string, Property][], requiredList?: string[]): FormGroup {
-    const group: { [key: string]: FormControl } = {};
+    const group: { [key: string]: FormControl; } = {};
 
     for (const [key, config] of data) {
       const validators: ValidatorFn[] = [];

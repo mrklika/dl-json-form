@@ -24,24 +24,20 @@ import { Config } from '../../models';
     @if (formControl) {
       <mat-form-field appearance="fill" style="width: 100%;" [color]="showError ? 'warn' : undefined">
         <mat-label>{{ config?.title }}</mat-label>
-
-        <ng-container *ngIf="!isMultiline; else textareaTpl">
+        @if (!isMultiline) {
           <input
             matInput
             [type]="'text'"
             [formControl]="formControl"
             (blur)="onTouched()"
           />
-        </ng-container>
-
-        <ng-template #textareaTpl>
+        } @else {
           <textarea
             matInput
             [formControl]="formControl"
             (blur)="onTouched()"
           ></textarea>
-        </ng-template>
-
+        }
         @if (errorMessage) {
           <mat-error>{{ errorMessage }}</mat-error>
         }

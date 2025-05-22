@@ -20,8 +20,8 @@ export class DynamicFieldComponent implements OnInit {
   @Input() control!: AbstractControl;
   @Input() config!: Config;
 
-  private view = inject(ViewContainerRef);
-  private injector = inject(Injector);
+  private readonly view = inject(ViewContainerRef);
+  private readonly injector = inject(Injector);
 
   async ngOnInit() {
     const widgetType = this.config?.widgetType ?? 'text';
@@ -31,7 +31,9 @@ export class DynamicFieldComponent implements OnInit {
       injector: this.injector,
     });
 
-    cmpRef.setInput('control', this.control);
+    if ('control' in cmpRef.instance) {
+      cmpRef.setInput('control', this.control);
+    }
 
     if ('config' in cmpRef.instance) {
       cmpRef.setInput('config', {
